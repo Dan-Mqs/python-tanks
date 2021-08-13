@@ -6,6 +6,7 @@ class Tank(object):
         self.alive = True
         self.ammo = 5
         self.armor = 60
+        self.kills = 0
 
     def __str__(self):
         if self.alive:
@@ -64,6 +65,9 @@ keys = []
 for k in tanksList.keys():
     keys.append(k)
 
+# Lista de tanques mortos
+deaths = []
+
 # Inicia a partida e executa cada rodada
 i = 1
 while len(tanksList) > 1:
@@ -73,10 +77,18 @@ while len(tanksList) > 1:
     j = 0
     print("\n+++ Players Alive +++")
     while j < len(tanksList):
-        playerName = tanksList.get(keys[j]).name
-        playerArmor = tanksList.get(keys[j]).armor
-        print(keys[j], " -> ", playerName, " --- Armor: ", playerArmor)
+        print(keys[j], " -> ", tanksList.get(keys[j]).name, " --- Armor: ", tanksList.get(keys[j]).armor, " --- Ammunition: ", tanksList.get(keys[j]).ammo, " --- Kills: ", tanksList.get(keys[j]).kills)
         j += 1
+
+    # Exibe Lista de Jogadores Mortos
+    j = 0
+    print("\n+++ Deaths +++")
+    if len(deaths) == 0:
+        print("No casualties yet.")
+    else:
+        while j < len(deaths):
+            print("[" + deaths[j] + "]")
+            j += 1
 
     # Sorteia o jogador da rodada
     randomNum = random.randint(0, len(tanksList)-1)
@@ -95,11 +107,13 @@ while len(tanksList) > 1:
 
     # Efetua o disparo
     
-    print("\n> Attack >")
+    print("\n<< Attack >>")
     roundTank.fire_at(target)
 
     # Verifica se o tanque atingido foi destruído
     if target.alive == False:
+        roundTank.kills += 1
+        deaths.append(target.name)
         tanksList.pop(targetName)
         keys.remove(targetName)
 
