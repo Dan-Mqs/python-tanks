@@ -1,3 +1,4 @@
 # Tanks Game in Python
 
-Tanks terminal minigame created while studying for Digital Games classes.
+Tanks minigame (work in progress) created while studying for Digital Games classes, using pygame.
+"tank.py" in "terminal" is playable if Python is installed.
